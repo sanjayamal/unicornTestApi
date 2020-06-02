@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using webApi.DataAccess;
+using webApi.Models;
+using webApi.Repository;
 
 namespace webApi
 {
@@ -25,7 +29,11 @@ namespace webApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataBaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
             services.AddControllers();
+            services.AddScoped<IRepository<Customer>, CustomerRepo>();
+            services.AddScoped<IRepository<Orders>, OrderRepo>();
+            services.AddScoped<IRepository<Product>, ProductRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
