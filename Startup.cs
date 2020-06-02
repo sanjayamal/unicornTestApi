@@ -34,6 +34,7 @@ namespace webApi
             services.AddScoped<IRepository<Customer>, CustomerRepo>();
             services.AddScoped<IRepository<Orders>, OrderRepo>();
             services.AddScoped<IRepository<Product>, ProductRepo>();
+            services.AddScoped<IRepository<OrderDetail>, OrderDetailRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
