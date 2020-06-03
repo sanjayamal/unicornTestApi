@@ -39,7 +39,7 @@ namespace webApi
             services.AddScoped<CustomerBusiness>();
             services.AddScoped<ProductBusiness>();
             services.AddScoped<OrderBusiness>();
-            services.AddScoped<OrderDetailBusiness>()
+            services.AddScoped<OrderDetailBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

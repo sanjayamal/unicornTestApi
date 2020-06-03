@@ -24,7 +24,19 @@ namespace webApi.Business
 
         public Customer GetOneCustomer(int id)
         {
-            throw new NotImplementedException();
+            Customer customer=_repository.GetById(id);
+            return customer;
+        }
+        public Customer CreateCustomer(Customer customerObj)
+        {
+            Customer customer = _repository.createData(customerObj);
+            return customer;
+        }
+
+        public bool DeleteCustomer(int id)
+        {
+            bool response = _repository.DeleteById(id);
+            return response;
         }
     }
 }

@@ -15,6 +15,12 @@ namespace webApi.Repository
         {
             _context = context;
         }
+
+        public OrderDetail createData(OrderDetail obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<OrderDetail> GetAll()
         {
             throw new NotImplementedException();
@@ -24,5 +30,15 @@ namespace webApi.Repository
         {
             throw new NotImplementedException();
         }
+
+        public OrderDetail updateData(OrderDetail obj)
+        {
+            throw new NotImplementedException();
+        }
+        public bool DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

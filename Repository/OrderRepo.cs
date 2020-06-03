@@ -15,12 +15,27 @@ namespace webApi.Repository
         {
             _context = context;
         }
+
+        public Orders createData(Orders obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Orders> GetAll()
         {
             throw new NotImplementedException();
         }
 
         public Orders GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Orders updateData(Orders obj)
+        {
+            throw new NotImplementedException();
+        }
+        public bool DeleteById(int id)
         {
             throw new NotImplementedException();
         }

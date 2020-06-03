@@ -21,16 +21,30 @@ namespace webApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult <IEnumerable<Customer>> GetAllCustomer()
+        public ActionResult<IEnumerable<Customer>> GetAllCustomer()
         {
-            List<Customer> customers= (List<Customer>)_business.GetAllCustomer();
+            List<Customer> customers = (List<Customer>)_business.GetAllCustomer();
             return customers;
         }
 
         [HttpGet("{id}")]
-        public ActionResult <Customer> GetOneCustomer(int id)
+        public ActionResult<Customer> GetOneCustomer(int id)
         {
-            throw new NotImplementedException();
+            Customer customer = _business.GetOneCustomer(id);
+            return customer;
+        }
+
+        [HttpPost]
+        public ActionResult<Customer> CreateCustomer(Customer customerObj)
+        {
+            Customer customer = _business.CreateCustomer(customerObj);
+            return customer;
+        }
+        [HttpDelete("{id}")]
+        public bool Delete(int id)
+        {
+            bool response = _business.DeleteCustomer(id);
+            return response;
         }
     }
 }
