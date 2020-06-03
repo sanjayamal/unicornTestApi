@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using webApi.Business;
 using webApi.Models;
-using webApi.Repository;
+
 
 namespace webApi.Controllers
 {
@@ -12,21 +13,24 @@ namespace webApi.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly IRepository<Customer> _repository;
+        private readonly CustomerBusiness _business;
 
-        public CustomerController(IRepository<Customer> repository)
+        public CustomerController(CustomerBusiness business)
         {
-            _repository = repository;
+            _business = business;
         }
+
         [HttpGet]
         public ActionResult <IEnumerable<Customer>> GetAllCustomer()
         {
-             throw new System.ArgumentException("original");
+            List<Customer> customers= (List<Customer>)_business.GetAllCustomer();
+            return customers;
         }
+
         [HttpGet("{id}")]
         public ActionResult <Customer> GetOneCustomer(int id)
         {
-            throw new System.ArgumentException("original");
+            throw new NotImplementedException();
         }
     }
 }

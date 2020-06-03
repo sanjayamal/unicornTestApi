@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using webApi.Business;
 using webApi.Models;
 using webApi.Repository;
 
@@ -12,11 +13,11 @@ namespace webApi.Controllers
     [ApiController]
     public class OrderDetailController : ControllerBase
     {
-        private readonly IRepository<OrderDetail> _repository;
+        private readonly OrderDetailBusiness _business;
 
-        public OrderDetailController(IRepository<OrderDetail> repository) 
+        public OrderDetailController(OrderDetailBusiness business) 
         {
-            _repository = repository;
+            _business = business;
         }
 
         [HttpGet]
@@ -24,6 +25,7 @@ namespace webApi.Controllers
         {
             throw new NotImplementedException();
         }
+
         [HttpGet("{id}")]
         public ActionResult<OrderDetail> GetOneOrderDetail(int id)
         {

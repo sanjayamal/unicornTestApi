@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using webApi.Business;
 using webApi.DataAccess;
 using webApi.Models;
 using webApi.Repository;
@@ -35,6 +36,10 @@ namespace webApi
             services.AddScoped<IRepository<Orders>, OrderRepo>();
             services.AddScoped<IRepository<Product>, ProductRepo>();
             services.AddScoped<IRepository<OrderDetail>, OrderDetailRepo>();
+            services.AddScoped<CustomerBusiness>();
+            services.AddScoped<ProductBusiness>();
+            services.AddScoped<OrderBusiness>();
+            services.AddScoped<OrderDetailBusiness>()
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

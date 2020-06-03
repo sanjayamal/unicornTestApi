@@ -13,7 +13,7 @@ namespace webApi.Repository
 
         public OrderRepo(DataBaseContext context)
         {
-            _context= context
+            _context = context;
         }
         public IEnumerable<Orders> GetAll()
         {

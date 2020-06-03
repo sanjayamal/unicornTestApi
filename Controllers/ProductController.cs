@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using webApi.Business;
 using webApi.Models;
 using webApi.Repository;
 
@@ -12,19 +13,21 @@ namespace webApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IRepository<Product> _repository;
+        private readonly ProductBusiness _business;
 
-        public ProductController(IRepository<Product> repository)
+        public ProductController(ProductBusiness business)
         {
-            _repository = repository;
+            _business = business;
         }
+
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetAllProduct()
         {
             throw new NotImplementedException();
         }
 
-        public ActionResult<Product> GetOneProduct()
+        [HttpGet("{id}")]
+        public ActionResult<Product> GetOneProduct(int id)
         {
             throw new NotImplementedException();
         }
