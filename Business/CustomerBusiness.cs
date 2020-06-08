@@ -33,6 +33,11 @@ namespace webApi.Business
             return customer;
         }
 
+        public Customer UpdateCustomer(Customer customerObj)
+        {
+            Customer customer = _repository.updateData(customerObj);
+            return customer;
+        }
         public bool DeleteCustomer(int id)
         {
             bool response = _repository.DeleteById(id);

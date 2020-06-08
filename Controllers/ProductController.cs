@@ -23,13 +23,33 @@ namespace webApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetAllProduct()
         {
-            throw new NotImplementedException();
+            List<Product> products =(List<Product>)_business.GetAllProduct();
+            return products;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Product> GetOneProduct(int id)
         {
-            throw new NotImplementedException();
+            Product product = _business.GetOneProduct(id);
+            return product;
+        }
+        [HttpPost]
+        public Product CreateProduct(Product productObj)
+        {
+            Product product = _business.CreateProduct(productObj);
+            return product;
+        }
+        [HttpPut]
+        public Product UpdateProduct(Product productObj)
+        {
+            Product product = _business.UpdateProduct(productObj);
+            return productObj;
+        }
+        [HttpDelete("{id}")]
+        public bool DeleteProduct(int id)
+        {
+            bool response = _business.DeleteProduct(id);
+            return response;
         }
     }
 }

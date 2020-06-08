@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using webApi.DataAccess;
@@ -9,16 +12,68 @@ namespace webApi.Repository
 {
     public class OrderDetailRepo : IRepository<OrderDetail>
     {
-        private readonly DataBaseContext _context;
+        private readonly IConfiguration _configuration;
 
-        public OrderDetailRepo(DataBaseContext context)
+        public OrderDetailRepo(IConfiguration configuration)
         {
-            _context = context;
+            _configuration = configuration;
         }
 
         public OrderDetail createData(OrderDetail obj)
         {
-            throw new NotImplementedException();
+            OrderDetail orderDetail = new OrderDetail();
+
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            {
+                string sql = "spCreateOrderDetail";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter param;
+                param = command.Parameters.Add("@LineNo", SqlDbType.Int);
+                param.Value = obj.LineNos;
+
+                param = command.Parameters.Add("@OrderNo", SqlDbType.Int);
+                param.Value = obj.OrderNo;
+
+                param = command.Parameters.Add("@ProductId", SqlDbType.Int);
+                param.Value = obj.ProductId;
+
+                param = command.Parameters.Add("@NoOfUnits", SqlDbType.Int);
+                param.Value = obj.NoOfUnits;
+
+                param = command.Parameters.Add("@UnitPrice", SqlDbType.Decimal);
+                param.Value = obj.UnitPrice;
+
+                param = command.Parameters.Add("@Amount", SqlDbType.Decimal);
+                param.Value = obj.Amount;
+
+                param = command.Parameters.Add("@Discount", SqlDbType.Decimal);
+                param.Value = obj.Discount;
+
+                param = command.Parameters.Add("@NetAmount", SqlDbType.Decimal);
+                param.Value = obj.NetAmount;
+
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        orderDetail = MaptoValue(reader);
+                    }
+                    reader.Close();
+                    return orderDetail;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
         public IEnumerable<OrderDetail> GetAll()
@@ -39,6 +94,20 @@ namespace webApi.Repository
         {
             throw new NotImplementedException();
         }
-
+        public OrderDetail MaptoValue(SqlDataReader reader)
+        {
+            return new OrderDetail
+            {
+                OrderDetailId = (int)reader["OrderDetailId"],
+                LineNos = (int)reader["LineNos"],
+                OrderNo = (int)reader["OrderNo"],
+                ProductId = (int)reader["ProductId"],
+                NoOfUnits = (int)reader["NoOfUnits"],
+                UnitPrice = (Decimal)reader["UnitPrice"],
+                Amount = (Decimal)reader["UnitPrice"],
+                Discount = (Decimal)reader["Discount"],
+                NetAmount = (Decimal)reader["NetAmount"],
+            };
+        }
     }
 }

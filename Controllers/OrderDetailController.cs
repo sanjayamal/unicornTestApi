@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using webApi.Business;
@@ -30,6 +31,12 @@ namespace webApi.Controllers
         public ActionResult<OrderDetail> GetOneOrderDetail(int id)
         {
             throw new NotImplementedException();
+        }
+        [HttpPost]
+        public ActionResult<OrderDetail> CreateOrderDetails(OrderDetail orderDetailObj)
+        {
+            OrderDetail orderDetail = _business.CreateOrderDetail(orderDetailObj);
+            return orderDetail;
         }
     }
 }

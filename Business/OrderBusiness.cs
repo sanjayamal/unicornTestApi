@@ -21,9 +21,15 @@ namespace webApi.Business
         {
             throw new NotImplementedException();
         }
-        public Orders GetOneProduct(int id)
+        public Orders GetOneOrder(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public Orders CreateOrder(Orders ordersObj)
+        {
+            Orders orders = _repository.createData(ordersObj);
+            return orders;
         }
     }
 }

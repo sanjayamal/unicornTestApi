@@ -25,5 +25,10 @@ namespace webApi.Business
         {
             throw new NotImplementedException();
         }
+        public OrderDetail CreateOrderDetail(OrderDetail ordersDetailObj)
+        {
+            OrderDetail ordersDetail = _repository.createData(ordersDetailObj);
+            return ordersDetail;
+        }
     }
 }

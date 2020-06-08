@@ -31,5 +31,13 @@ namespace webApi.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpPost]
+        public ActionResult<Orders> CreateOrder(Orders ordersObj)
+        {
+            Orders order = _business.CreateOrder(ordersObj);
+            return order;
+
+        }
     }
 }

@@ -40,6 +40,15 @@ namespace webApi.Controllers
             Customer customer = _business.CreateCustomer(customerObj);
             return customer;
         }
+
+        [HttpPut]
+        public ActionResult<Customer> UpdateCustomer(Customer customerObj)
+        {
+            Customer customer = _business.UpdateCustomer(customerObj);
+            return customer;
+        }
+
+
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
