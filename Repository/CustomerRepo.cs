@@ -13,20 +13,21 @@ namespace webApi.Repository
 {
     public class CustomerRepo : IRepository<Customer>
     {
-        public readonly DataBaseContext _context;
-        private readonly IConfiguration _configuration;
+       // public readonly DataBaseContext _context;
+        private readonly SqlConnection connection;
+
 
         public CustomerRepo(IConfiguration configuration /*DataBaseContext context*/)
         {
             // _context = context;
-            _configuration = configuration;
+           connection = new SqlConnection(configuration.GetConnectionString("SqlServerConnection"));
         }
 
         public Customer createData(Customer obj)
         {
             Customer customer = new Customer();
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spCreateCustomer";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -62,10 +63,6 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
             }
 
             /*            try
@@ -93,7 +90,7 @@ namespace webApi.Repository
         {
             Customer customer = new Customer();
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spGetCustomer";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -117,10 +114,7 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
+
                 /*           try
                            {
                                SqlParameter parameter = new SqlParameter("@id", id);
@@ -140,7 +134,7 @@ namespace webApi.Repository
         {
             List<Customer> customers = new List<Customer>();
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spGetCustomer";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -163,10 +157,7 @@ namespace webApi.Repository
 
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
+
             }
             /*            try
                         {
@@ -184,7 +175,7 @@ namespace webApi.Repository
         {
 
             Customer customer = new Customer();
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spUpdateCustomer";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -226,10 +217,7 @@ namespace webApi.Repository
 
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
+
             }
             /*try
             {
@@ -255,7 +243,7 @@ namespace webApi.Repository
         public bool DeleteById(int id)
         {
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spDeleteCustomer";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -278,10 +266,7 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
+
                 return false;
             }
             /*            try

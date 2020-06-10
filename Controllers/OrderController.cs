@@ -29,7 +29,8 @@ namespace webApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<Orders> GetOneOrder(int id)
         {
-            throw new NotImplementedException();
+            Orders orderswithOrderDetails = _business.GetOrderWithOrderLine(id);
+            return orderswithOrderDetails;
         }
 
         [HttpPost]

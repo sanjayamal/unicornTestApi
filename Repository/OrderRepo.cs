@@ -12,17 +12,19 @@ namespace webApi.Repository
 {
     public class OrderRepo : IRepository<Orders>
     {
-        private readonly IConfiguration _configuration;
+       
+        private readonly SqlConnection connection;
 
         public OrderRepo(IConfiguration configuration)
         {
-            _configuration = configuration;
+            connection = new SqlConnection(configuration.GetConnectionString("SqlServerConnection"));
+
         }
 
         public Orders createData(Orders obj)
         {
             Orders order = new Orders();
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spCreateOrder";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -54,10 +56,6 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
             }
         }
         public IEnumerable<Orders> GetAll()
@@ -67,9 +65,34 @@ namespace webApi.Repository
 
         public Orders GetById(int id)
         {
-            throw new NotImplementedException();
-        }
+            Orders orders = new Orders();
 
+            using (connection)
+            {
+                string sql = "spGetOrder";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter param;
+                param = command.Parameters.Add("@OrderId", SqlDbType.Int);
+                param.Value = id;
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        orders = MaptoValue(reader);
+                    }
+                    reader.Close();
+                    return orders;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
         public Orders updateData(Orders obj)
         {
             throw new NotImplementedException();
@@ -83,11 +106,11 @@ namespace webApi.Repository
         {
             return new Orders
             {
-               
+
                 OrderId = (int)reader["OrderId"],
                 CustomerId = (int)reader["CustomerId"],
                 OrderDate = (DateTime)reader["OrderDate"],
-                OrderAmount = (Decimal)reader["OrderAmount"]
+                OrderAmount = (Decimal)reader["OrderAmount"],
 
             };
         }

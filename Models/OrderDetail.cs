@@ -28,7 +28,7 @@ namespace webApi.Models
         [Column(TypeName = "decimal(20,2)")]
         public decimal NetAmount { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        
     }
 }
 

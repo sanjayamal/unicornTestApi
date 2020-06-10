@@ -10,10 +10,12 @@ namespace webApi.Business
     public class OrderDetailBusiness
     {
         private readonly IRepository<OrderDetail> _repository;
+        private readonly OrderDetailRepo _detailRepo;
 
-        public OrderDetailBusiness(IRepository<OrderDetail> repository)
+        public OrderDetailBusiness(IRepository<OrderDetail> repository,OrderDetailRepo detailRepo)
         {
             _repository = repository;
+            _detailRepo = detailRepo;
         }
 
         public IEnumerable<OrderDetail> GetAllOrderDetail()
@@ -29,6 +31,13 @@ namespace webApi.Business
         {
             OrderDetail ordersDetail = _repository.createData(ordersDetailObj);
             return ordersDetail;
+        }
+
+        public List<OrderDetail> GetAllOrderDetailByOrderId(int id)
+        {
+            List<OrderDetail> orderDetails =(List<OrderDetail>)_detailRepo.GetAllByOrderId(id);
+            return orderDetails;
+          
         }
     }
 }

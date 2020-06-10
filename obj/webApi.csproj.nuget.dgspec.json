@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Unicorn_Detail\\assignment\\webApi\\webApi.csproj": {}
+    "F:\\Unicorn_Detail\\Assignment\\webApi\\webApi.csproj": {}
   },
   "projects": {
-    "F:\\Unicorn_Detail\\assignment\\webApi\\webApi.csproj": {
+    "F:\\Unicorn_Detail\\Assignment\\webApi\\webApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Unicorn_Detail\\assignment\\webApi\\webApi.csproj",
+        "projectUniqueName": "F:\\Unicorn_Detail\\Assignment\\webApi\\webApi.csproj",
         "projectName": "webApi",
-        "projectPath": "F:\\Unicorn_Detail\\assignment\\webApi\\webApi.csproj",
+        "projectPath": "F:\\Unicorn_Detail\\Assignment\\webApi\\webApi.csproj",
         "packagesPath": "C:\\Users\\HGR Sanjayamal\\.nuget\\packages\\",
-        "outputPath": "F:\\Unicorn_Detail\\assignment\\webApi\\obj\\",
+        "outputPath": "F:\\Unicorn_Detail\\Assignment\\webApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

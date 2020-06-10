@@ -12,18 +12,19 @@ namespace webApi.Repository
 {
     public class OrderDetailRepo : IRepository<OrderDetail>
     {
-        private readonly IConfiguration _configuration;
+       
+        private readonly SqlConnection connection;
 
         public OrderDetailRepo(IConfiguration configuration)
         {
-            _configuration = configuration;
+            connection = new SqlConnection(configuration.GetConnectionString("SqlServerConnection"));
         }
 
         public OrderDetail createData(OrderDetail obj)
         {
             OrderDetail orderDetail = new OrderDetail();
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spCreateOrderDetail";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -69,10 +70,6 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
             }
         }
 
@@ -93,6 +90,39 @@ namespace webApi.Repository
         public bool DeleteById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<OrderDetail> GetAllByOrderId(int id)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+
+            using (connection)
+            {
+                string sql = "spGetOrderdetail";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter param;
+                param = command.Parameters.Add("@OrderNo", SqlDbType.Int);
+                param.Value = id;
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        orderDetails.Add(MaptoValue(reader));
+                    }
+                    reader.Close();
+
+                    return orderDetails;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
         }
         public OrderDetail MaptoValue(SqlDataReader reader)
         {

@@ -13,18 +13,19 @@ namespace webApi.Repository
 {
     public class ProductRepo : IRepository<Product>
     {
-        private readonly IConfiguration _configuration;
+   
+        private readonly SqlConnection connection;
 
         public ProductRepo(IConfiguration configuration)
         {
-            _configuration = configuration;
+            connection = new SqlConnection(configuration.GetConnectionString("SqlServerConnection"));
         }
 
         public Product createData(Product obj)
         {
             Product product = new Product();
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spCreateProduct";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -55,10 +56,6 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
             }
         }
 
@@ -67,7 +64,7 @@ namespace webApi.Repository
             List<Product> products = new List<Product>();
 
 
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spGetProduct";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -89,17 +86,13 @@ namespace webApi.Repository
                     Console.WriteLine(exp.Message);
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
 
             }
         }
         public Product GetById(int id)
         {
             Product product = new Product();
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spGetProduct";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -123,18 +116,13 @@ namespace webApi.Repository
                 {
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
-
             }
         }
 
         public Product updateData(Product obj)
         {
             Product product = new Product();
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spUpdateProduct";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -170,15 +158,11 @@ namespace webApi.Repository
 
                     throw;
                 }
-                finally
-                {
-                    connection.Close();
-                }
             }
         }
         public bool DeleteById(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SqlServerConnection")))
+            using (connection)
             {
                 string sql = "spDeleteProduct";
                 SqlCommand command = new SqlCommand(sql, connection);
@@ -200,10 +184,6 @@ namespace webApi.Repository
                 catch (Exception)
                 {
                     throw;
-                }
-                finally
-                {
-                    connection.Close();
                 }
                 return false;
             }

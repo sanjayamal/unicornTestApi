@@ -36,6 +36,7 @@ namespace webApi
             services.AddScoped<IRepository<Orders>, OrderRepo>();
             services.AddScoped<IRepository<Product>, ProductRepo>();
             services.AddScoped<IRepository<OrderDetail>, OrderDetailRepo>();
+            services.AddScoped<OrderDetailRepo>();
             services.AddScoped<CustomerBusiness>();
             services.AddScoped<ProductBusiness>();
             services.AddScoped<OrderBusiness>();
